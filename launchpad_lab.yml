@@ -5,7 +5,6 @@
   gather_facts: yes
   vars:
     users: 1
-    slaves: 1
     group_name: launchpad_lab
     lab_name: launchpad_example_httpd
 
@@ -100,7 +99,6 @@
         - cli_build_images
 
     - include: "{{ lab_name }}/launchpad_looper.yml"
-    #- include: launchpad_looper.yml
       with_sequence: start=1 end={{ users }}
       loop_control:
         loop_var: master_name
