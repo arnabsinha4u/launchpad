@@ -1,6 +1,6 @@
 ---
   - name: Start Master Container (CLI)
-    command: docker run -d -P --name=master-{{ master_name }} -h master-{{ master_name }}  {{ lab_name}}/master:latest
+    command: docker run -d -P --name=master-{{ master_name }} -h master-{{ master_name }}  "{{ lab_name }}/master":latest
     register: run_master
     failed_when:
       - "'Conflict' not  in run_master.stderr"
@@ -15,7 +15,7 @@
     docker_container:
       name: master-{{ master_name }}
       hostname: master-{{ master_name }}
-      image: {{ lab_name }}/master:latest
+      image: "{{ lab_name }}/master:latest"
       state: started
       published_ports: all
       env: PORT=8080
@@ -34,7 +34,7 @@
   - name: Forwarding into bashrc
     lineinfile:
       dest: /home/{{ group_name }}user{{ master_name }}/.bashrc
-      line: "sudo docker exec -ti master-{{ master_name }} bash;exit"
+      line: "ssh root@{{ master_ip_address.stdout }};exit"
       state: present
     tags:
       - scaleup 

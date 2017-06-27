@@ -99,7 +99,8 @@
         - cli_startup
         - cli_build_images
 
-    - include: {{ lab_name }}/launchpad_looper.yml
+    - include: "{{ lab_name }}/launchpad_looper.yml"
+    #- include: launchpad_looper.yml
       with_sequence: start=1 end={{ users }}
       loop_control:
         loop_var: master_name
