@@ -7,7 +7,7 @@
     users: 1
     slaves: 1
     group_name: launchpad_lab
-    lab_name: launchpad
+    lab_name: launchpad_example_httpd
 
   tasks:
     - name: Baseline Machine
@@ -84,29 +84,25 @@
 
     - name: Build Image (Module)
       docker_image:
-        path: "{{ item }}"
+        path: "{{ lab_name }}"
         dockerfile: Dockerfile
         state: present
-        name: "{{ lab_name }}/{{ item }}"
+        name: "{{ lab_name }}/master"
         tag: latest
-      with_items:
-        - master_{{ lab_name }}
       tags:
         - m_startup
         - m_build_images
 
     - name: Build Image (CLI)
-      command: docker build -t "{{ lab_name }}"/"{{ item }}":latest {{ item }}
-      with_items:
-        - master_{{ lab_name }}
+      command: docker build -t "{{ lab_name }}"/master:latest {{ item }}
       tags:
         - cli_startup
         - cli_build_images
 
-#    - include: {{ lab_name }}/docker_lab_sandbox.yml
-#      with_sequence: start=1 end={{ users }}
-#      loop_control:
-#        loop_var: master_name
+    - include: {{ lab_name }}/launchpad_looper.yml
+      with_sequence: start=1 end={{ users }}
+      loop_control:
+        loop_var: master_name
 
     - name: Remove lab users
       user:
