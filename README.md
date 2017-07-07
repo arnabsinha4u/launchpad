@@ -3,6 +3,9 @@ A launchpad to create training lab/workshops for DevOps tooling or any tool/tech
 
 ![Launchpad](launchpad.jpg)
 
+### Slideshare Link:
+https://www.slideshare.net/ArnabSinha36/ansible-docker-setting-up-your-own-workshop
+
 ### How To's:
 Bootstrap host and Startup Lab (Default settings: creates 1 launchpad_lab group, lauchpad_lab1 user and one master container for the user)
 ```
