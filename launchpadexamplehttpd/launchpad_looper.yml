@@ -1,4 +1,5 @@
 ---
+### MODIFY THIS TASK FOR ADDITIONAL PARAMETERS (while using cli) ###
   - name: Start Master Container (CLI)
     command: docker run -d -P --name=master-{{ master_name }} -h master-{{ master_name }}  "{{ lab_name }}/master":latest
     register: run_master
@@ -11,6 +12,7 @@
     tags:
       - cli_startup
 
+### MODIFY THIS TASK FOR ADDITIONAL PARAMETERS (while using ansible module) ###
   - name: Start Master Container (Module)
     docker_container:
       name: master-{{ master_name }}
@@ -33,7 +35,7 @@
 
   - name: Forwarding into bashrc
     lineinfile:
-      dest: /home/{{ group_name }}user{{ master_name }}/.bashrc
+      dest: /home/lab_{{ lab_name }}_user{{ master_name }}/.bashrc
       line: "ssh root@{{ master_ip_address.stdout }};exit"
       state: present
     tags:
@@ -42,14 +44,14 @@
       - cli_startup
 
   - name: Copy SSH Keys to Master (id_rsa)
-    command: docker cp /home/{{ group_name }}user{{ master_name }}/.ssh/id_rsa master-{{ master_name }}:/root/.ssh/id_rsa
+    command: docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa master-{{ master_name }}:/root/.ssh/id_rsa
     tags:
       - m_startup
       - cli_startup
       - ssh_key_exchange
 
   - name: Copy SSH Keys to Master (public)
-    command: docker cp /home/{{ group_name }}user{{ master_name }}/.ssh/id_rsa.pub master-{{ master_name }}:/root/.ssh/authorized_keys
+    command: docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa.pub master-{{ master_name }}:/root/.ssh/authorized_keys
     tags:
       - m_startup
       - cli_startup

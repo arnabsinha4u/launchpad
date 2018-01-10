@@ -5,8 +5,8 @@
   gather_facts: yes
   vars:
     users: 1
-    group_name: launchpad_lab
-    lab_name: launchpad_example_httpd
+    lab_name: launchpadexamplehttpd
+    group_name: grp_{{ lab_name }}
 
   tasks:
     - name: Baseline Machine
@@ -48,7 +48,7 @@
           ssh_key_file=.ssh/id_rsa
           update_password=always
           state=present
-      with_sequence: start=1 end={{ users }} format={{ group_name}}user%d
+      with_sequence: start=1 end={{ users }} format=lab_{{ lab_name }}_user%d
       tags:
         - users
         - baseline
@@ -66,7 +66,7 @@
         dest: /etc/ssh/sshd_config
         regexp: '^(AllowUsers(?!.*\b{{ item }}\b).*)$'
         replace: '\1 {{ item }}'
-      with_sequence: start=1 end={{ users }} format={{ group_name}}user%d
+      with_sequence: start=1 end={{ users }} format=lab_{{ lab_name }}_user%d
       tags:
         - ssh
         - users
@@ -108,7 +108,7 @@
         state=absent
         force=yes
         remove=yes
-      with_sequence: start=1 end={{ users }} format={{ group_name}}user%d
+      with_sequence: start=1 end={{ users }} format=lab_{{ lab_name }}_user%d
       tags:
         - remove_users
         - remove_baseline
@@ -134,7 +134,7 @@
         dest: /etc/ssh/sshd_config
         regexp: '{{ item }}\s?\b'
         replace: ''
-      with_sequence: start=1 end={{ users }} format={{ group_name}}user%d
+      with_sequence: start=1 end={{ users }} format=lab_{{ lab_name }}_user%d
       tags:
         - revert_ssh
         - remove_users

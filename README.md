@@ -35,8 +35,9 @@ Scale-down of Shutdown Lab for more users (example 3 users):
 ```
 
 ### Extend Launchpad for more!
-* Create a directory as the same level of launchpad_example_httpd
+* Create a directory as the same level of launchpadexamplehttpd
 * Copy launchpad_looper.yml into the newly created directory
+* Modify the Docker run section in the launchpad_looper.yml (like ports to be exposed etc.)
 * Create a Dockerfile for the DevOps tooling or any tool/technology
 * Startup and have fun!
 #### Startup
