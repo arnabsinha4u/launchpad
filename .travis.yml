@@ -21,5 +21,5 @@ install:
 script:
   # Basic role syntax check
   - ansible-playbook launchpad_lab.yml --syntax-check
-  - ansible-lint -x launchpad_lab.yml
-  - ansible-lint -x launchpadexamplehttpd/launchpad_looper.yml
+  - ansible-lint launchpad_lab.yml
+  - ansible-lint launchpadexamplehttpd/launchpad_looper.yml
