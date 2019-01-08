@@ -39,7 +39,7 @@
       line: "ssh root@{{ master_ip_address.stdout }};exit"
       state: present
     tags:
-      - scaleup 
+      - scaleup
       - m_startup
       - cli_startup
 
