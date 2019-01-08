@@ -22,4 +22,4 @@ script:
   # Basic role syntax check
   - ansible-playbook launchpad_lab.yml --syntax-check
   - ansible-lint -x "301" launchpad_lab.yml
-  - ansible-lint launchpadexamplehttpd/launchpad_looper.yml
+  - ansible-lint -x "204" launchpadexamplehttpd/launchpad_looper.yml
