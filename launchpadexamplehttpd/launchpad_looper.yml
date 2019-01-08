@@ -1,7 +1,9 @@
 ---
 ### MODIFY THIS TASK FOR ADDITIONAL PARAMETERS (while using cli) ###
   - name: Start Master Container (CLI)
-    command: docker run -d -P --name={{ lab_name }}-master-{{ master_name }} -h "{{ lab_name }}-master-{{ master_name }}"  "{{ lab_name }}/master":latest
+    command: >
+      docker run -d -P --name={{ lab_name }}-master-{{ master_name }}
+      -h "{{ lab_name }}-master-{{ master_name }}"  "{{ lab_name }}/master":latest
     register: run_master
     failed_when:
       - "'Conflict' not  in run_master.stderr"
@@ -44,21 +46,27 @@
       - cli_startup
 
   - name: Copy SSH Keys to Master (id_rsa)
-    command: docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa "{{ lab_name }}-master-{{ master_name }}":/root/.ssh/id_rsa
+    command: >
+      docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa
+      "{{ lab_name }}-master-{{ master_name }}":/root/.ssh/id_rsa
     tags:
       - m_startup
       - cli_startup
       - ssh_key_exchange
 
   - name: Copy SSH Keys to Master (public)
-    command: docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa.pub "{{ lab_name }}-master-{{ master_name }}":/root/.ssh/authorized_keys
+    command: >
+      docker cp /home/lab_{{ lab_name }}_user{{ master_name }}/.ssh/id_rsa.pub
+      "{{ lab_name }}-master-{{ master_name }}":/root/.ssh/authorized_keys
     tags:
       - m_startup
       - cli_startup
       - ssh_key_exchange
 
   - name: Remove Master Containers (CLI)
-    command: docker stop -t=0 "{{ lab_name }}-master-{{ master_name }}" && docker rm -f "{{ lab_name }}-master-{{ master_name }}"
+    command: >
+      docker stop -t=0 "{{ lab_name }}-master-{{ master_name }}" &&
+      docker rm -f "{{ lab_name }}-master-{{ master_name }}"
     register: stop_master
     failed_when:
       - "'No such container' not in stop_master.stderr"
