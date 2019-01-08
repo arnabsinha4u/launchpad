@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/arnabsinha4u/launchpad.svg?branch=master)](https://travis-ci.org/arnabsinha4u/launchpad)
+
 # Launchpad
 A launchpad to create training lab/workshops for DevOps tooling or any tool/technology using Ansible and Docker
 
